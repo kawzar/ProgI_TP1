@@ -14,6 +14,7 @@ public:
 	void jump();
 	void draw(RenderWindow * window);
 	void update();
+	FloatRect getBounds();
 
 protected:
 	Texture _tx;
@@ -29,7 +30,7 @@ protected:
 	float accelerationY = 0;
 	float gravity = 1;
 	bool isGrounded;
-	bool faceRight;
+	bool faceLeft;
 
 
 	void updateMovement();

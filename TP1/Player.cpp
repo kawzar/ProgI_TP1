@@ -8,12 +8,12 @@ using namespace std;
 
 Player::Player()
 {
-	_tx.loadFromFile("Images/cat.png");
+	_tx.loadFromFile("Images/jumper.png");
 	_sprite.setTexture(_tx);
 	_sprite.setOrigin(_tx.getSize().x / 2, _tx.getSize().y);
 	x = 160;
-	y = 390;
-	faceRight = true;
+	y = 525;
+	faceLeft = true;
 }
 
 
@@ -28,15 +28,15 @@ void Player::draw(RenderWindow * window) {
 void Player::update() {
 	updateMovement();
 
-	if (velocityX > 0.0f && !faceRight)
-	{
-		_sprite.setScale(1.f, 1.f);
-		faceRight = true;		
-	}
-	else if (velocityX < 0.0f && faceRight)
+	if (velocityX > 0.0f && faceLeft)
 	{
 		_sprite.setScale(-1.f, 1.f);
-		faceRight = false;
+		faceLeft = false;		
+	}
+	else if (velocityX < 0.0f && !faceLeft)
+	{
+		_sprite.setScale(1.f, 1.f);
+		faceLeft = true;
 	}
 
 	_sprite.setPosition(x, y);
@@ -67,9 +67,13 @@ void Player::updateMovement() {
 	x += velocityX;
 	y += velocityY;
 
-	isGrounded = y >= 400;
+	isGrounded = y >= 525;
 
-	if (y > 400) {
-		y = 400;
+	if (y > 525) {
+		y = 525;
 	}
+}
+
+FloatRect Player::getBounds() {
+	return _sprite.getGlobalBounds();
 }

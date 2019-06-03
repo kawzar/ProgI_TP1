@@ -1,10 +1,15 @@
 #include "pch.h"
 #include "Game.h"
+#include <iostream>
+
+using namespace std;
 
 
 Game::Game()
 {
 	_player = new Player();
+	Platform* plat = new Platform(Vector2f(160, 400));
+	platforms.push_back(plat);
 
 	InitWindow();
 }
@@ -12,6 +17,9 @@ Game::Game()
 
 Game::~Game()
 {
+	for (it = platforms.begin(); it != platforms.end(); it++) {
+		delete *it;
+	}
 }
 
 void Game::Loop()
@@ -20,6 +28,7 @@ void Game::Loop()
 	{
 		EventHandling();
 		InputHandling();
+		CheckCollisions();
 		Update();
 		Draw();
 	}
@@ -71,6 +80,17 @@ void Game::EventHandling()
 void Game::Update()
 {
 	_player->update();
+	for (it = platforms.begin(); it != platforms.end(); it++) {
+		(*it)->update();
+	}
+}
+
+void Game::CheckCollisions() {
+	for (it = platforms.begin(); it != platforms.end(); it++) {
+		if ((*it)->intersects(_player->getBounds())) {
+			cout << "collided" << endl;
+		}
+	}
 }
 
 void Game::Draw()
@@ -78,6 +98,10 @@ void Game::Draw()
 	_window->clear();
 	_window->draw(_background);
 	_player->draw(_window);
+
+	for (it = platforms.begin(); it != platforms.end(); it++) {
+		(*it)->draw(_window);
+	}
 	
 	_window->display();
 }
@@ -85,9 +109,9 @@ void Game::Draw()
 
 void Game::InitWindow()
 {
-	_window = new RenderWindow(VideoMode(900, 468), "TP1");
+	_window = new RenderWindow(VideoMode(800, 600), "TP1");
 	_window->setMouseCursorVisible(true);
 	_window->setFramerateLimit(60);
-	_txBackground.loadFromFile("Images/background.png");
+	_txBackground.loadFromFile("Images/mundo_fondo.jpg");
 	_background.setTexture(_txBackground);
 }
