@@ -96,12 +96,13 @@ void Game::Draw()
 {
 	_window->clear();
 	_window->draw(_background);
-	_player->draw(_window);
 
 	for (int i = 0; i < 10; i++) {
 
 		platformArray[i]->draw(_window);
 	}
+	
+	_player->draw(_window);
 	
 	_window->display();
 }
@@ -117,12 +118,12 @@ void Game::InitWindow()
 }
 
 void Game::InitArrays() {
-	float xPos = 150;
+	float xPos = 200;
 	for (int i = 0; i < 10; i++) {
 	
 		xPos += 40;
 		AddToArray(i);
-		platformArray[i] = new Platform(Vector2f(xPos, 450), values[i]);
+		platformArray[i] = new Platform(Vector2f(xPos, 400), values[i]);
 		cout << "added platform";
 	}
 }

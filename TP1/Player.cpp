@@ -72,6 +72,10 @@ void Player::updateMovement() {
 	if (y > 525) {
 		y = 525;
 	}
+
+	if (y < 395 + _sprite.getGlobalBounds().height) {
+		y = 395 + _sprite.getGlobalBounds().height;
+	}
 }
 
 FloatRect Player::getBounds() {
