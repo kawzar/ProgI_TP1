@@ -23,6 +23,8 @@ protected:
 	imageManager* img_mgr;
 	list<Platform*> platforms;
 	list<Platform*>::iterator it;
+	int values[10];
+	Platform* platformArray[10];
 
 	void EventHandling();
 	void Update();
@@ -30,5 +32,7 @@ protected:
 	void InitWindow();
 	void InputHandling();
 	void CheckCollisions();
+	void InitArrays();
+	void AddToArray(int index);
 };
 
