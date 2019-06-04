@@ -71,6 +71,7 @@ void Player::updateMovement() {
 
 	if (y > 465) {
 		y = 465;
+		colliding = false;
 	}
 
 	if (y < 395) {
@@ -84,4 +85,12 @@ FloatRect Player::getBounds() {
 
 Vector2f Player::getColliderPosition() {
 	return Vector2f(_sprite.getPosition());
+}
+
+void Player::collide() {
+	colliding = true;
+}
+
+bool Player::isColliding() {
+	return colliding;
 }

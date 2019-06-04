@@ -11,6 +11,7 @@ Game::Game()
 
 	InitWindow();
 	InitArrays();
+	InitClock();
 }
 
 
@@ -25,6 +26,7 @@ void Game::Loop()
 {
 	while (_window->isOpen())
 	{
+		UpdateClock();
 		EventHandling();
 		InputHandling();
 		Update();
@@ -78,6 +80,7 @@ void Game::EventHandling()
 
 void Game::Update()
 {
+
 	if (lastCorrectIndex == amountOfBlocks) {
 		cout << "Game finished";
 	}
@@ -90,12 +93,18 @@ void Game::Update()
 
 void Game::CheckCollisions() {
 	for (int i = 0; i < amountOfBlocks; i++) {
-		if (platformArray[i]->intersects(_player->getColliderPosition())) {
-			if (platformArray[i]->getValue() == values[lastCorrectIndex]) {
-				MarkBlockAsCorrect(platformArray[i]);
-			}
-			else {
-				MarkBlockAsIncorrect();
+		if (!_player->isColliding()) {
+			if (platformArray[i]->intersects(_player->getColliderPosition())) {
+				_player->collide();
+
+				if (platformArray[i]->getValue() == values[lastCorrectIndex]) {
+					MarkBlockAsCorrect(platformArray[i]);
+				}
+				else {
+					MarkBlockAsIncorrect();
+				}
+
+				isPlayerColliding = true;
 			}
 		}
 	}
@@ -105,6 +114,7 @@ void Game::Draw()
 {
 	_window->clear();
 	_window->draw(_background);
+	_window->draw(_txtTime);
 
 	for (int i = 0; i < amountOfBlocks; i++) {
 
@@ -138,6 +148,20 @@ void Game::InitArrays() {
 	bubbleSort(values, amountOfBlocks);
 }
 
+void Game::InitClock() {
+	_time = sf::seconds(60.0f);
+	int seconds = _time.asSeconds();
+
+	if (!_font.loadFromFile("Less.otf"))
+	{
+		cout << "Couldn't load font";
+	}
+
+	_txtTime = Text(std::to_string(seconds), _font, 15);
+	_txtTime.setFillColor(sf::Color::White);
+	_txtTime.setPosition(15, 15);
+}
+
 void Game::AddToArray(int index) {
 	int number = 1 + (std::rand() % (999 - 1 + 1));
 	bool exists = false;
@@ -160,7 +184,7 @@ void Game::MarkBlockAsCorrect(Platform* platform) {
 }
 
 void Game::MarkBlockAsIncorrect() {
-	cout << "incorrect" << endl;
+	_time -= sf::seconds(10.0f);
 }
 
 
@@ -181,4 +205,10 @@ void Game::bubbleSort(int arr[], int n)
 			}
 		}
 	}
+}
+
+void Game::UpdateClock() {
+	_time -= _clock.restart();
+	int seconds = _time.asSeconds();
+	_txtTime.setString(std::to_string(seconds));
 }

@@ -17,12 +17,15 @@ public:
 	FloatRect getBounds();
 
 	Vector2f getColliderPosition();
+	bool isColliding();
+	void collide();
 
 protected:
 	Texture _tx;
 	Sprite _sprite;
 	float _velocity = 0.0f;
 	float _speed = 10.0f;
+	bool colliding;
 
 	float x = 0;
 	float y = 0;

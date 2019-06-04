@@ -27,6 +27,11 @@ private:
 	Platform* platformArray[10];
 	int lastCorrectIndex = 0;
 	const int amountOfBlocks = 10;
+	Clock _clock;
+	Time _time;
+	Text _txtTime;
+	Font _font;
+	bool isPlayerColliding;
 
 	void EventHandling();
 	void Update();
@@ -38,6 +43,8 @@ private:
 	void AddToArray(int index);
 	void MarkBlockAsCorrect(Platform* platform);
 	void MarkBlockAsIncorrect();
+	void UpdateClock();
+	void InitClock();
 
 	void swap(int *xp, int *yp);
 	void bubbleSort(int arr[], int n);
