@@ -20,18 +20,20 @@ private:
 	Texture _txBackground;
 	Sprite _background;
 	Player* _player;
-	imageManager* img_mgr;
-	list<Platform*> platforms;
-	list<Platform*>::iterator it;
-	int values[10];
-	Platform* platformArray[10];
-	int lastCorrectIndex = 0;
-	const int amountOfBlocks = 10;
 	Clock _clock;
 	Time _time;
 	Text _txtTime;
+	Text _txtGameOver;
 	Font _font;
+	Platform* platformArray[10];
+
+	int values[10];
+	int lastCorrectIndex = 0;
 	bool isPlayerColliding;
+	bool gameOver;
+	bool playerWon;
+
+	const int amountOfBlocks = 10;
 
 	void EventHandling();
 	void Update();
@@ -45,7 +47,8 @@ private:
 	void MarkBlockAsIncorrect();
 	void UpdateClock();
 	void InitClock();
-
+	void ShowGameOverScreen();
+	void CheckWinCondition();
 	void swap(int *xp, int *yp);
 	void bubbleSort(int arr[], int n);
 };

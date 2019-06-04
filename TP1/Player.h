@@ -26,6 +26,8 @@ protected:
 	float _velocity = 0.0f;
 	float _speed = 10.0f;
 	bool colliding;
+	const int floor = 465;
+	const int maxJump = 395;
 
 	float x = 0;
 	float y = 0;

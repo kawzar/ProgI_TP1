@@ -20,7 +20,7 @@ Platform::Platform(Vector2f position, int value)
 		cout << "Couldn't load font";
 	}
 
-	_text = Text(std::to_string(_value), font, 24);
+	_text = Text(std::to_string(_value), font, 20);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setOrigin(_sprite.getOrigin());
 }
@@ -54,4 +54,9 @@ int Platform::getValue() {
 
 void Platform::markAsCorrect() {
 	_text.setFillColor(sf::Color::Green);
+	alreadyMarked = true;
+}
+
+bool Platform::isAlreadyMarked() {
+	return alreadyMarked;
 }

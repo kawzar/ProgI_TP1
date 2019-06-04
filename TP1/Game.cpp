@@ -17,23 +17,25 @@ Game::Game()
 
 Game::~Game()
 {
-	for (it = platforms.begin(); it != platforms.end(); it++) {
-		delete *it;
-	}
 }
 
 void Game::Loop()
 {
 	while (_window->isOpen())
 	{
-		UpdateClock();
-		EventHandling();
-		InputHandling();
-		Update();
-		CheckCollisions();
-		Draw();
+		if (!gameOver) {
+			UpdateClock();
+			EventHandling();
+			InputHandling();
+			Update();
+			CheckCollisions();
+			Draw();
+			CheckWinCondition();
+		}
+		else {
+			ShowGameOverScreen();
+		}
 	}
-
 }
 
 void Game::InputHandling() 
@@ -80,12 +82,8 @@ void Game::EventHandling()
 
 void Game::Update()
 {
-
-	if (lastCorrectIndex == amountOfBlocks) {
-		cout << "Game finished";
-	}
-
 	_player->update();
+
 	for (int i = 0; i < amountOfBlocks; i++) {
 		platformArray[i]->update();
 	}
@@ -100,7 +98,7 @@ void Game::CheckCollisions() {
 				if (platformArray[i]->getValue() == values[lastCorrectIndex]) {
 					MarkBlockAsCorrect(platformArray[i]);
 				}
-				else {
+				else if (!platformArray[i]->isAlreadyMarked()) {
 					MarkBlockAsIncorrect();
 				}
 
@@ -211,4 +209,49 @@ void Game::UpdateClock() {
 	_time -= _clock.restart();
 	int seconds = _time.asSeconds();
 	_txtTime.setString(std::to_string(seconds));
+}
+
+void Game::ShowGameOverScreen() {
+	if(playerWon){
+		_txtGameOver = Text("You won! Your remaining time was: ", _font, 15);
+		_txtGameOver.setFillColor(sf::Color::Green);
+		_txtGameOver.setPosition(200, 250);
+
+		_txtTime.setFillColor(sf::Color::Green);
+		_txtTime.setPosition(200, 290);
+		_window->draw(_txtTime);
+
+	}
+	else {
+		_txtGameOver = Text("You Lost!", _font, 15);
+		_txtGameOver.setFillColor(sf::Color::Red);
+		_txtGameOver.setPosition(200, 250);
+		_txtTime.setFillColor(Color::Black);
+	}
+
+	Event evt;
+	while (_window->waitEvent(evt))
+	{
+		if (evt.type == Event::Closed) {
+			_window->close();
+		}
+
+		_window->clear(Color::Black);
+		_window->draw(_txtGameOver);
+		_window->draw(_txtTime);
+		_window->display();
+	}
+}
+
+void Game::CheckWinCondition() {
+	if (lastCorrectIndex == amountOfBlocks) {
+		gameOver = true;
+		playerWon = true;
+	}
+
+	if (_time <= sf::seconds(0.0f)) {
+		gameOver = true;
+		playerWon = false;
+	}
+
 }

@@ -67,15 +67,15 @@ void Player::updateMovement() {
 	x += velocityX;
 	y += velocityY;
 
-	isGrounded = y >= 465;
+	isGrounded = y >= floor;
 
-	if (y > 465) {
-		y = 465;
+	if (y > floor) {
+		y = floor;
 		colliding = false;
 	}
 
-	if (y < 395) {
-		y = 395;
+	if (y < maxJump) {
+		y = maxJump;
 	}
 }
 

@@ -15,6 +15,7 @@ public:
 	bool intersects(Vector2f point);
 	int getValue();
 	void markAsCorrect();
+	bool isAlreadyMarked();
 
 private:
 	Texture _tx;
@@ -25,5 +26,6 @@ private:
 	float x = 0;
 	float y = 0;
 	int _value;
+	bool alreadyMarked;
 };
 
