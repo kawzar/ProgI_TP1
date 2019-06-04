@@ -14,8 +14,9 @@ public:
 	bool intersects(FloatRect rect);
 	bool intersects(Vector2f point);
 	int getValue();
+	void markAsCorrect();
 
-protected:
+private:
 	Texture _tx;
 	Sprite _sprite;
 	Text _text;

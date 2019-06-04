@@ -15,7 +15,7 @@ public:
 	~Game();
 	void Loop();
 
-protected:
+private:
 	RenderWindow *_window;
 	Texture _txBackground;
 	Sprite _background;
@@ -25,6 +25,8 @@ protected:
 	list<Platform*>::iterator it;
 	int values[10];
 	Platform* platformArray[10];
+	int lastCorrectIndex = 0;
+	const int amountOfBlocks = 10;
 
 	void EventHandling();
 	void Update();
@@ -34,5 +36,10 @@ protected:
 	void CheckCollisions();
 	void InitArrays();
 	void AddToArray(int index);
+	void MarkBlockAsCorrect(Platform* platform);
+	void MarkBlockAsIncorrect();
+
+	void swap(int *xp, int *yp);
+	void bubbleSort(int arr[], int n);
 };
 

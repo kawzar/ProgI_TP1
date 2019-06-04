@@ -51,3 +51,7 @@ bool Platform::intersects(Vector2f point) {
 int Platform::getValue() {
 	return _value;
 }
+
+void Platform::markAsCorrect() {
+	_text.setFillColor(sf::Color::Green);
+}
