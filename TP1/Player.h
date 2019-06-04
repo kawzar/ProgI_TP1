@@ -16,6 +16,8 @@ public:
 	void update();
 	FloatRect getBounds();
 
+	Vector2f getColliderPosition();
+
 protected:
 	Texture _tx;
 	Sprite _sprite;

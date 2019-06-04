@@ -10,7 +10,7 @@ Player::Player()
 {
 	_tx.loadFromFile("Images/jumper.png");
 	_sprite.setTexture(_tx);
-	_sprite.setOrigin(_tx.getSize().x / 2, _tx.getSize().y);
+	_sprite.setOrigin(_tx.getSize().x / 2, 0);
 	x = 160;
 	y = 525;
 	faceLeft = true;
@@ -67,17 +67,21 @@ void Player::updateMovement() {
 	x += velocityX;
 	y += velocityY;
 
-	isGrounded = y >= 525;
+	isGrounded = y >= 465;
 
-	if (y > 525) {
-		y = 525;
+	if (y > 465) {
+		y = 465;
 	}
 
-	if (y < 395 + _sprite.getGlobalBounds().height) {
-		y = 395 + _sprite.getGlobalBounds().height;
+	if (y < 395) {
+		y = 395;
 	}
 }
 
 FloatRect Player::getBounds() {
 	return _sprite.getGlobalBounds();
+}
+
+Vector2f Player::getColliderPosition() {
+	return Vector2f(_sprite.getPosition());
 }

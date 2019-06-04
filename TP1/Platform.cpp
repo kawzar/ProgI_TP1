@@ -44,6 +44,10 @@ bool Platform::intersects(FloatRect rect) {
 	return _sprite.getGlobalBounds().intersects(rect);
 }
 
+bool Platform::intersects(Vector2f point) {
+	return _sprite.getGlobalBounds().contains(point);
+}
+
 int Platform::getValue() {
 	return _value;
 }

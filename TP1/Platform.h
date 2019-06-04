@@ -12,6 +12,7 @@ public:
 	void draw(RenderWindow * window);
 	void update();
 	bool intersects(FloatRect rect);
+	bool intersects(Vector2f point);
 	int getValue();
 
 protected:

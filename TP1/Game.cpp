@@ -86,8 +86,8 @@ void Game::Update()
 
 void Game::CheckCollisions() {
 	for (int i = 0; i < 10; i++) {
-		if (platformArray[i]->intersects(_player->getBounds())) {
-			cout << "collided" << endl;
+		if (platformArray[i]->intersects(_player->getColliderPosition())) {
+			cout << "collided with " << platformArray[i]->getValue() << endl;
 		}
 	}
 }
@@ -121,15 +121,14 @@ void Game::InitArrays() {
 	float xPos = 200;
 	for (int i = 0; i < 10; i++) {
 	
-		xPos += 40;
+		xPos += 41;
 		AddToArray(i);
 		platformArray[i] = new Platform(Vector2f(xPos, 400), values[i]);
-		cout << "added platform";
 	}
 }
 
 void Game::AddToArray(int index) {
-	int number = 1 + (std::rand() % (10 - 1 + 1));
+	int number = 1 + (std::rand() % (999 - 1 + 1));
 	bool exists = false;
 
 	for (int i = 0; i < index && !exists; i++) {
