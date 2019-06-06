@@ -22,7 +22,8 @@ Platform::Platform(Vector2f position, int value)
 
 	_text = Text(std::to_string(_value), font, 20);
 	_text.setFillColor(sf::Color::Yellow);
-	_text.setOrigin(_sprite.getOrigin());
+	_text.setOrigin(_sprite.getOrigin().x - 5, _sprite.getOrigin().y - 10);
+	alreadyMarked = false;
 }
 
 

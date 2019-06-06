@@ -138,12 +138,13 @@ void Game::InitArrays() {
 	float xPos = 200;
 	for (int i = 0; i < amountOfBlocks; i++) {
 	
-		xPos += 41;
+		xPos += 40;
 		AddToArray(i);
 		platformArray[i] = new Platform(Vector2f(xPos, 400), values[i]);
 	}
 
-	bubbleSort(values, amountOfBlocks);
+	Quicksort(values, 0, amountOfBlocks - 1);
+
 }
 
 void Game::InitClock() {
@@ -186,23 +187,37 @@ void Game::MarkBlockAsIncorrect() {
 }
 
 
-
-void Game::swap(int *xp, int *yp)
+void Game::Quicksort(int arr[], int inf, int sup)
 {
-	int temp = *xp;
-	*xp = *yp;
-	*yp = temp;
-}
+	int aux;
+	int i = inf - 1;
+	int j = sup;
+	int flag = 1;
+	int pivot = arr[sup];
 
-void Game::bubbleSort(int arr[], int n)
-{
-	for (int i = 0; i < n - 1; i++) {
-		for (int j = 0; j < n - i - 1; j++) {
-			if (arr[j] > arr[j + 1]) {
-				swap(&arr[j], &arr[j + 1]);
-			}
+	if (inf >= sup)
+		return;
+
+	while (flag)
+	{
+		while (arr[++i] < pivot);
+		while (arr[--j] > pivot);
+		if (i < j)
+		{
+			aux = arr[i];
+			arr[i] = arr[j];
+			arr[j] = aux;
 		}
+		else
+			flag = 0;
 	}
+
+	aux = arr[i];
+	arr[i] = arr[sup];
+	arr[sup] = aux;
+
+	Quicksort(arr, inf, i - 1);
+	Quicksort(arr, i + 1, sup);
 }
 
 void Game::UpdateClock() {

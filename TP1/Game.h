@@ -49,7 +49,6 @@ private:
 	void InitClock();
 	void ShowGameOverScreen();
 	void CheckWinCondition();
-	void swap(int *xp, int *yp);
-	void bubbleSort(int arr[], int n);
+	void Quicksort(int arr[], int inf, int sup);
 };
 
