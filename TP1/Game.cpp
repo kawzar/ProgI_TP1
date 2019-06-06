@@ -12,6 +12,7 @@ Game::Game()
 	InitWindow();
 	InitArrays();
 	InitClock();
+	InitSound();
 }
 
 
@@ -56,9 +57,9 @@ void Game::InputHandling()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-	_player->jump();
+		_player->jump();
+		_jumpSound.play();
 	}
-
 }
 
 
@@ -69,13 +70,9 @@ void Game::EventHandling()
 	{
 		switch (evt.type)
 		{
-		case Event::Closed:
-			_window->close();
-			break;
-		case Event::MouseButtonPressed:
-			if (evt.mouseButton.button == Mouse::Button::Left)
-			{
-			}
+			case Event::Closed:
+				_window->close();
+				break;
 		}
 	}
 }
@@ -161,6 +158,19 @@ void Game::InitClock() {
 	_txtTime.setPosition(15, 15);
 }
 
+void Game::InitSound()
+{
+	_jumpSb.loadFromFile("Sounds/smw_jump.wav");
+	_correctSb.loadFromFile("Sounds/smw_coin.wav");
+	_failSb.loadFromFile("Sounds/smw_stomp.wav");
+	_clockSb.loadFromFile("Sounds/tick.wav");
+	
+	_jumpSound.setBuffer(_jumpSb);
+	_correctSound.setBuffer(_correctSb);
+	_failSound.setBuffer(_failSb);
+	_clockSound.setBuffer(_clockSb);
+}
+
 void Game::AddToArray(int index) {
 	int number = 1 + (std::rand() % (999 - 1 + 1));
 	bool exists = false;
@@ -180,10 +190,12 @@ void Game::AddToArray(int index) {
 void Game::MarkBlockAsCorrect(Platform* platform) {
 	platform->markAsCorrect();
 	lastCorrectIndex++;
+	_correctSound.play();
 }
 
 void Game::MarkBlockAsIncorrect() {
 	_time -= sf::seconds(10.0f);
+	_failSound.play();
 }
 
 
@@ -221,9 +233,15 @@ void Game::Quicksort(int arr[], int inf, int sup)
 }
 
 void Game::UpdateClock() {
+	int previousSecond = _time.asSeconds();
 	_time -= _clock.restart();
+
 	int seconds = _time.asSeconds();
 	_txtTime.setString(std::to_string(seconds));
+
+	if (seconds != previousSecond) {
+		_clockSound.play();
+	}
 }
 
 void Game::ShowGameOverScreen() {

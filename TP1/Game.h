@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Player.h"
 #include "imageManager.h"
 #include <list>
@@ -26,6 +27,14 @@ private:
 	Text _txtGameOver;
 	Font _font;
 	Platform* platformArray[10];
+	SoundBuffer _clockSb;
+	SoundBuffer _jumpSb;
+	SoundBuffer _correctSb;
+	SoundBuffer _failSb;
+	Sound _clockSound;
+	Sound _jumpSound;
+	Sound _correctSound;
+	Sound _failSound;
 
 	int values[10];
 	int lastCorrectIndex = 0;
@@ -39,6 +48,7 @@ private:
 	void Update();
 	void Draw();
 	void InitWindow();
+	void InitSound();
 	void InputHandling();
 	void CheckCollisions();
 	void InitArrays();
